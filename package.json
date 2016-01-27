@@ -1,11 +1,10 @@
 {
   "name": "abl-utils",
   "title": "ABL - utils",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "description": "description",
   "homepage": "http://adventurebucketlist.com/",
-  "main": "build/index.js",
   "keywords": [],
   "author": {
     "name": "TrejGun",
@@ -21,6 +20,7 @@
   },
   "dependencies": {
     "abl-constants": "git+ssh://github.com/bucket-list/constants.git#ffd5efb0c0c85ea3a4a310e1052bc3503bdd9a39",
+    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#228d33c5e5a9803b8a5a75c1805384acb67db76a",
     "escape-string-regexp": "1.0.4",
     "moment": "2.11.1",
     "moment-timezone": "0.5.0"

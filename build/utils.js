@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.isType = isType;
-exports.getType = getType;
 exports.getEventInstanceId = getEventInstanceId;
 exports.getEventId = getEventId;
 exports.getEventDate = getEventDate;
@@ -40,10 +39,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function isType(variable, type) {
 	return Object.prototype.toString.call(variable) === "[object " + type + "]";
 } // eslint-disable-line no-unused-vars
-
-function getType(variable) {
-	return Object.prototype.toString.call(variable).match(/\s([^\]]+)/)[1];
-}
 
 function getEventInstanceId(eventId, time) {
 	return eventId + "_" + _moment2.default.tz(time, "UTC").format(_date.googleFormat);
