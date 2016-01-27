@@ -1,10 +1,10 @@
 "use strict";
 
 import debug from "debug";
-import {makeError} from "./messenger.js";
-import lang from "abl-lang";
+import {makeError} from "./error";
+import {translate} from "abl-lang";
 
-const log = debug("log:helper");
+const log = debug("utils:responce");
 
 function _send(request, response) {
 	return (error) => {
@@ -29,7 +29,7 @@ export function sendError(error, request, response, next) {
 		const key = error.message.match(/\$(\S+)/)[1];
 		return send({
 			status: 400,
-			message: lang.translate("error/mongo/" + key, request.user) || lang.translate("error/mongo/E11000", request.user)
+			message: translate("error/mongo/" + key, request.user) || translate("error/mongo/E11000", request.user)
 		});
 	}
 	if (error.type === "StripeCardError" || error.type === "StripeInvalidRequest") {
@@ -51,7 +51,7 @@ export function sendError(error, request, response, next) {
 	return send(error);
 }
 
-export function simpleJSONWrapper(method) {
+export function wrapJSON(method) {
 	return (request, response, next) => {
 		method(request, response, next)
 			.then(result => {
@@ -68,7 +68,7 @@ export function simpleJSONWrapper(method) {
 	};
 }
 
-export function simpleFileWrapper(method) {
+export function wrapFile(method) {
 	return (request, response, next) => {
 		method(request, response, next)
 			.then(result => {
@@ -82,7 +82,7 @@ export function simpleFileWrapper(method) {
 	};
 }
 
-export function stripeWrapper(method) {
+export function wrapStripe(method) {
 	return (request, response, next) => {
 		method(request, response, next)
 			.then(response.json.bind(response))

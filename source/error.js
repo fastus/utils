@@ -19,7 +19,7 @@ export function makeError(key, user, code = 400) {
 	return _makeError(lang.translate("error/server/" + key, user), code);
 }
 
-export function checkObject(controller, user) {
+export function checkModel(controller, user) {
 	return model => {
 		if (!model) {
 			throw _makeError(getText(controller.displayName, "not-found", user, "Not Found"), 404);

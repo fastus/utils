@@ -4,15 +4,15 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.sendError = sendError;
-exports.simpleJSONWrapper = simpleJSONWrapper;
-exports.simpleFileWrapper = simpleFileWrapper;
-exports.stripeWrapper = stripeWrapper;
+exports.wrapJSON = wrapJSON;
+exports.wrapFile = wrapFile;
+exports.wrapStripe = wrapStripe;
 
 var _debug = require("debug");
 
 var _debug2 = _interopRequireDefault(_debug);
 
-var _messenger = require("./messenger.js");
+var _error = require("./error");
 
 var _ablLang = require("abl-lang");
 
@@ -58,7 +58,7 @@ function sendError(error, request, response, next) {
 	}
 	if (!error.status) {
 		if (process.env.NODE_ENV === "production") {
-			return send((0, _messenger.makeError)("server-error", request.user, 500));
+			return send((0, _error.makeError)("server-error", request.user, 500));
 		} else {
 			return send({
 				status: 500,
@@ -69,7 +69,7 @@ function sendError(error, request, response, next) {
 	return send(error);
 }
 
-function simpleJSONWrapper(method) {
+function wrapJSON(method) {
 	return function (request, response, next) {
 		method(request, response, next).then(function (result) {
 			if (result.success === false) {
@@ -83,7 +83,7 @@ function simpleJSONWrapper(method) {
 	};
 }
 
-function simpleFileWrapper(method) {
+function wrapFile(method) {
 	return function (request, response, next) {
 		method(request, response, next).then(function (result) {
 			log("result", result);
@@ -94,7 +94,7 @@ function simpleFileWrapper(method) {
 	};
 }
 
-function stripeWrapper(method) {
+function wrapStripe(method) {
 	return function (request, response, next) {
 		method(request, response, next).then(response.json.bind(response)).catch(function (error) {
 			log(error);
@@ -108,7 +108,7 @@ function stripeWrapper(method) {
 				case "StripeAuthenticationError":
 				default:
 					if (process.env.NODE_ENV === "production") {
-						sendError((0, _messenger.makeError)("stripe-bad-request", request.user, 400), request, response);
+						sendError((0, _error.makeError)("stripe-bad-request", request.user, 400), request, response);
 					}
 					return sendError(error, request, response);
 			}
