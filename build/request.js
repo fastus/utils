@@ -20,7 +20,8 @@ var _misc = require("./misc");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// eslint-disable-line no-unused-vars
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } // eslint-disable-line no-unused-vars
+
 function getIP(request) {
 	return request.get("CF-Connecting-IP") || request.ip;
 }
@@ -51,12 +52,10 @@ function setStatus(clean, query, constructor) {
 function setRegExp(clean, query, fields) {
 	fields.forEach(function (name) {
 		if (query[name]) {
-			Object.assign(clean, {
-				name: {
-					$regex: "^" + (0, _escapeStringRegexp2.default)(query[name]),
-					$options: "i"
-				}
-			});
+			Object.assign(clean, _defineProperty({}, name, {
+				$regex: "^" + (0, _escapeStringRegexp2.default)(query[name]),
+				$options: "i"
+			}));
 		}
 	});
 }
