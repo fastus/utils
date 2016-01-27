@@ -19,15 +19,14 @@
     "url": "https://github.com/bucket-list/API/issues"
   },
   "dependencies": {
-    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.0.2",
-    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.0.2",
+    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#v0.0.2",
+    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#v0.0.2",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.4",
     "moment": "2.11.1",
     "moment-timezone": "0.5.0"
   },
   "devDependencies": {
-    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#ffd5efb0c0c85ea3a4a310e1052bc3503bdd9a39",
     "babel-core": "6.4.5",
     "babel-cli": "6.4.5",
     "babel-plugin-espower": "2.1.1",
