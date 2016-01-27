@@ -16,11 +16,9 @@ var _error = require("./error");
 
 var _ablLang = require("abl-lang");
 
-var _ablLang2 = _interopRequireDefault(_ablLang);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var log = (0, _debug2.default)("log:helper");
+var log = (0, _debug2.default)("utils:responce");
 
 function _send(request, response) {
 	return function (error) {
@@ -47,7 +45,7 @@ function sendError(error, request, response, next) {
 		var key = error.message.match(/\$(\S+)/)[1];
 		return send({
 			status: 400,
-			message: _ablLang2.default.translate("error/mongo/" + key, request.user) || _ablLang2.default.translate("error/mongo/E11000", request.user)
+			message: (0, _ablLang.translate)("error/mongo/" + key, request.user) || (0, _ablLang.translate)("error/mongo/E11000", request.user)
 		});
 	}
 	if (error.type === "StripeCardError" || error.type === "StripeInvalidRequest") {

@@ -4,18 +4,14 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.makeError = makeError;
-exports.checkObject = checkObject;
+exports.checkModel = checkModel;
 exports.checkUser = checkUser;
 exports.checkActive = checkActive;
 exports.checkPast = checkPast;
 
 var _ablLang = require("abl-lang");
 
-var _ablLang2 = _interopRequireDefault(_ablLang);
-
 var _date = require("abl-constants/build/date");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _makeError(text) {
 	var code = arguments.length <= 1 || arguments[1] === undefined ? 500 : arguments[1];
@@ -27,16 +23,16 @@ function _makeError(text) {
 }
 
 function getText(displayName, key, user, fallback) {
-	return _ablLang2.default.translate("error/server/" + displayName + "-" + key, user) || displayName.charAt(0).toUpperCase() + displayName.slice(1) + " " + fallback;
+	return (0, _ablLang.translate)("error/server/" + displayName + "-" + key, user) || displayName.charAt(0).toUpperCase() + displayName.slice(1) + " " + fallback;
 }
 
 function makeError(key, user) {
 	var code = arguments.length <= 2 || arguments[2] === undefined ? 400 : arguments[2];
 
-	return _makeError(_ablLang2.default.translate("error/server/" + key, user), code);
+	return _makeError((0, _ablLang.translate)("error/server/" + key, user), code);
 }
 
-function checkObject(controller, user) {
+function checkModel(controller, user) {
 	return function (model) {
 		if (!model) {
 			throw _makeError(getText(controller.displayName, "not-found", user, "Not Found"), 404);
