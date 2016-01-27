@@ -1,6 +1,6 @@
 "use strict";
 
-import lang from "abl-lang";
+import {translate} from "abl-lang";
 import {date} from "abl-constants/build/date";
 
 
@@ -12,11 +12,11 @@ function _makeError(text, code = 500) {
 }
 
 function getText(displayName, key, user, fallback) {
-	return lang.translate(`error/server/${displayName}-${key}`, user) || `${displayName.charAt(0).toUpperCase() + displayName.slice(1)} ${fallback}`;
+	return translate(`error/server/${displayName}-${key}`, user) || `${displayName.charAt(0).toUpperCase() + displayName.slice(1)} ${fallback}`;
 }
 
 export function makeError(key, user, code = 400) {
-	return _makeError(lang.translate("error/server/" + key, user), code);
+	return _makeError(translate("error/server/" + key, user), code);
 }
 
 export function checkModel(controller, user) {
