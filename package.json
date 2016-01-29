@@ -1,7 +1,7 @@
 {
   "name": "abl-utils",
   "title": "ABL - utils",
-  "version": "0.0.7",
+  "version": "0.0.8",build
   "license": "MIT",
   "description": "description",
   "homepage": "http://adventurebucketlist.com/",
@@ -34,7 +34,7 @@
     "babel-preset-stage-0": "6.3.13",
     "eslint": "1.10.3",
     "eslint-config-trejgun": "git://github.com/TrejGun/eslint-config-trejgun.git#6beca5e7537dac1a70d155796f73df2555792495",
-    "mocha": "2.4.2",
+    "mocha": "2.4.5",
     "power-assert": "1.2.0"
   },
   "engines": {
