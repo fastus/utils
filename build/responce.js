@@ -18,7 +18,7 @@ var _ablLang = require("abl-lang");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var log = (0, _debug2.default)("utils:responce");
+var log = (0, _debug2.default)("utils:response");
 
 function _send(request, response) {
 	return function (error) {

@@ -4,7 +4,7 @@ import debug from "debug";
 import {makeError} from "./error";
 import {translate} from "abl-lang";
 
-const log = debug("utils:responce");
+const log = debug("utils:response");
 
 function _send(request, response) {
 	return (error) => {
