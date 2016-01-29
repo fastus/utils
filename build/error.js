@@ -32,18 +32,18 @@ function makeError(key, user) {
 	return _makeError((0, _ablLang.translate)("error/server/" + key, user), code);
 }
 
-function checkModel(controller, user) {
-	return function (model) {
+function checkModel(user) {
+	return function checkModelInner(model) {
 		if (!model) {
-			throw _makeError(getText(controller.displayName, "not-found", user, "Not Found"), 404);
+			throw _makeError(getText(this.displayName, "not-found", user, "Not Found"), 404);
 		} else {
 			return model;
 		}
 	};
 }
 
-function checkUser(controller, user) {
-	return function (model) {
+function checkUser(user) {
+	return function checkUserInner(model) {
 		if (user._id.toString() !== model.user._id.toString()) {
 			throw makeError("access-denied", user, 403);
 		} else {
@@ -54,14 +54,12 @@ function checkUser(controller, user) {
 
 function checkActive() {
 	var isAllowed = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
-	var context = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
 
-	return function isActiveInner(model, request) {
-		var controller = context || this;
+	return function chackActiveInner(model, request) {
 		var isAdmin = !request.user.apiKeys[0].public;
-		var isActive = model.status === controller.constructor.statuses.active;
+		var isActive = model.status === this.constructor.statuses.active;
 		if (!isActive && !(isAllowed && isAdmin)) {
-			throw _makeError(getText(controller.displayName, "not-active", request.user, "Is Not Active"), 400);
+			throw _makeError(getText(this.displayName, "not-active", request.user, "Is Not Active"), 400);
 		} else {
 			return model;
 		}
@@ -72,7 +70,7 @@ function checkPast() {
 	var isAllowed = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 	var field = arguments.length <= 1 || arguments[1] === undefined ? "startTime" : arguments[1];
 
-	return function isPastInner(model, request) {
+	return function checkPastInner(model, request) {
 		var isAdmin = !request.user.apiKeys[0].public;
 		var isPast = model[field] <= _date.date; // <= for tests
 		if (isPast && !(isAllowed && isAdmin)) {
