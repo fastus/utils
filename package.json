@@ -1,7 +1,7 @@
 {
   "name": "abl-utils",
   "title": "ABL - utils",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "license": "MIT",
   "description": "description",
   "homepage": "http://adventurebucketlist.com/",
@@ -19,8 +19,8 @@
     "url": "https://github.com/bucket-list/API/issues"
   },
   "dependencies": {
-    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.0.2",
-    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.0.3",
+    "abl-constants": "https://github.com/bucket-list/constants.git#0.0.2",
+    "abl-lang": "https://github.com/bucket-list/lang.git#0.0.3",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.4",
     "moment": "2.11.1",
@@ -33,7 +33,7 @@
     "babel-preset-es2015": "6.3.13",
     "babel-preset-stage-0": "6.3.13",
     "eslint": "1.10.3",
-    "eslint-config-trejgun": "git://github.com/TrejGun/eslint-config-trejgun.git#6beca5e7537dac1a70d155796f73df2555792495",
+    "eslint-config-trejgun": "https://github.com/TrejGun/eslint-config-trejgun.git#6beca5e7537dac1a70d155796f73df2555792495",
     "mocha": "2.4.5",
     "power-assert": "1.2.0"
   },
