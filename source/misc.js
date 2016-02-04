@@ -29,5 +29,5 @@ export function tpl(template, data) {
 }
 
 export function toDollars(amount) {
-	return `$${(amount || 0).toFixed(2)}`;
+	return `$${(amount && amount / 100 || 0).toFixed(2)}`;
 }
