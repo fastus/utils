@@ -55,7 +55,7 @@ function checkUser(user) {
 function checkActive() {
 	var isAllowed = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
 
-	return function chackActiveInner(model, request) {
+	return function checkActiveInner(model, request) {
 		var isAdmin = !request.user.apiKeys[0].public;
 		var isActive = model.status === this.constructor.statuses.active;
 		if (!isActive && !(isAllowed && isAdmin)) {

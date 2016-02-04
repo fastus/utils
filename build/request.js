@@ -53,7 +53,7 @@ function setRegExp(clean, query, fields) {
 	fields.forEach(function (name) {
 		if (query[name]) {
 			Object.assign(clean, _defineProperty({}, name, {
-				$regex: "^" + (0, _escapeStringRegexp2.default)(query[name]),
+				$regex: (0, _escapeStringRegexp2.default)(query[name]),
 				$options: "i"
 			}));
 		}

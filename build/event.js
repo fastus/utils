@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.getEventInstanceId = getEventInstanceId;
 exports.getEventId = getEventId;
 exports.getEventDate = getEventDate;
-exports.countAttendees = countAttendees;
 
 var _moment = require("moment");
 
@@ -30,10 +29,4 @@ function getEventId(eventInstanceId) {
 
 function getEventDate(eventInstanceId) {
 	return _moment2.default.tz(eventInstanceId.split("_")[1], _date.googleFormat, "UTC").toDate();
-}
-
-function countAttendees(attendees) {
-	return Object.keys(attendees || {}).reduce(function (memo, key) {
-		return memo + attendees[key];
-	}, 0);
 }
