@@ -40,7 +40,7 @@ export function checkUser(user) {
 }
 
 export function checkActive(isAllowed = false) {
-	return function chackActiveInner(model, request) {
+	return function checkActiveInner(model, request) {
 		const isAdmin = !request.user.apiKeys[0].public;
 		const isActive = model.status === this.constructor.statuses.active;
 		if (!isActive && !(isAllowed && isAdmin)) {
