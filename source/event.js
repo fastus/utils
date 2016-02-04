@@ -16,9 +16,3 @@ export function getEventId(eventInstanceId) {
 export function getEventDate(eventInstanceId) {
 	return moment.tz(eventInstanceId.split("_")[1], googleFormat, "UTC").toDate();
 }
-
-export function countAttendees(attendees) {
-	return Object.keys(attendees || {}).reduce((memo, key) => {
-		return memo + attendees[key];
-	}, 0);
-}
