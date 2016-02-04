@@ -23,7 +23,7 @@
     "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.0.5",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.4",
-    "moment": "2.11.1",
+    "moment": "2.11.2",
     "moment-timezone": "0.5.0"
   },
   "devDependencies": {
