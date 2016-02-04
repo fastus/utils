@@ -19,7 +19,7 @@
     "url": "https://github.com/bucket-list/API/issues"
   },
   "dependencies": {
-    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.0.3",
+    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.0.4",
     "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.0.5",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.4",
