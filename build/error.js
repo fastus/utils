@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.makeError = makeError;
 exports.checkModel = checkModel;
-exports.checkUser = checkUser;
+exports.checkOperator = checkOperator;
 exports.checkActive = checkActive;
 exports.checkPast = checkPast;
 
@@ -42,10 +42,10 @@ function checkModel(user) {
 	};
 }
 
-function checkUser(user) {
-	return function checkUserInner(model) {
-		if (user._id.toString() !== model.user._id.toString()) {
-			throw makeError("access-denied", user, 403);
+function checkOperator(operator) {
+	return function checkOperatorInner(model) {
+		if (operator._id.toString() !== model.operator._id.toString()) {
+			throw makeError("access-denied", operator, 403);
 		} else {
 			return model;
 		}

@@ -1,7 +1,7 @@
 {
   "name": "abl-utils",
   "title": "ABL - utils",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "license": "MIT",
   "description": "description",
   "homepage": "http://adventurebucketlist.com/",
@@ -19,8 +19,8 @@
     "url": "https://github.com/bucket-list/API/issues"
   },
   "dependencies": {
-    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.0.4",
-    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.0.5",
+    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.1.0",
+    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.1.0",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.4",
     "moment": "2.11.2",
