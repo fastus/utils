@@ -39,6 +39,16 @@ export function checkOperator(operator) {
 	};
 }
 
+export function checkAdministrator(operator) {
+	return function checkOperatorInner(model) {
+		if (operator._id.toString() !== model.administrator._id.toString()) {
+			throw makeError("access-denied", operator, 403);
+		} else {
+			return model;
+		}
+	};
+}
+
 export function checkActive(isAllowed = false) {
 	return function checkActiveInner(model, request) {
 		const isAdmin = !request.user.apiKeys[0].public;
