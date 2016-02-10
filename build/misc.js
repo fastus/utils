@@ -7,6 +7,7 @@ exports.isType = isType;
 exports.getRandomString = getRandomString;
 exports.tpl = tpl;
 exports.toDollars = toDollars;
+exports.formatUrl = formatUrl;
 
 var _crypto = require("crypto");
 
@@ -41,4 +42,13 @@ function tpl(template, data) {
 
 function toDollars(amount) {
 	return "$" + (amount && amount / 100 || 0).toFixed(2);
+}
+
+function formatUrl(_ref) {
+	var protocol = _ref.protocol;
+	var hostname = _ref.hostname;
+	var port = _ref.port;
+
+	// url.format puts port 80 which we dont need
+	return protocol + "://" + hostname + (port === "80" ? "" : ":" + port) + "/";
 }

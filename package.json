@@ -43,6 +43,6 @@
   "scripts": {
     "build": "rm -rf build && babel -d ./build ./source",
     "lint": "eslint source/*",
-    "test": "NODE_ENV=${NODE_ENV:=test} mocha"
+    "test": "NODE_ENV=${NODE_ENV:=test} mocha test/utils"
   }
 }

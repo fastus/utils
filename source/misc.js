@@ -31,3 +31,9 @@ export function tpl(template, data) {
 export function toDollars(amount) {
 	return `$${(amount && amount / 100 || 0).toFixed(2)}`;
 }
+
+
+export function formatUrl({protocol, hostname, port}) {
+	// url.format puts port 80 which we dont need
+	return `${protocol}://${hostname}${port === "80" ? "" : ":" + port}/`;
+}
