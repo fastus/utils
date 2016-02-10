@@ -45,7 +45,7 @@ function sendError(error, request, response, next) {
 		var key = error.message.match(/\$(\S+)/)[1];
 		return send({
 			status: 400,
-			message: (0, _ablLang.translate)("error/mongo/" + key, request.user) || (0, _ablLang.translate)("error/mongo/E11000", request.user)
+			message: (0, _ablLang.translate)("error.mongo." + key, request.user) || (0, _ablLang.translate)("error.mongo.E11000", request.user)
 		});
 	}
 	if (error.type === "StripeCardError" || error.type === "StripeInvalidRequest") {

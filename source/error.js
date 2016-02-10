@@ -12,11 +12,11 @@ function _makeError(text, code = 500) {
 }
 
 function getText(displayName, key, user, fallback) {
-	return translate(`error/server/${displayName}-${key}`, user) || `${displayName.charAt(0).toUpperCase() + displayName.slice(1)} ${fallback}`;
+	return translate(`error.server.${displayName}-${key}`, user) || `${displayName.charAt(0).toUpperCase() + displayName.slice(1)} ${fallback}`;
 }
 
 export function makeError(key, user, code = 400) {
-	return _makeError(translate("error/server/" + key, user), code);
+	return _makeError(translate("error.server." + key, user), code);
 }
 
 export function checkModel(user) {

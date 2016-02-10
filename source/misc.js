@@ -1,7 +1,7 @@
 "use strict";
 
 import crypto from "crypto";
-
+import {getObject} from "abl-lang";
 
 export function isType(variable, type) {
 	return Object.prototype.toString.call(variable) === "[object " + type + "]";
@@ -25,7 +25,7 @@ export function getRandomString(length = 64, type = 3) {
 }
 
 export function tpl(template, data) {
-	return template.replace(/(\$\{([^\{\}]+)\})/g, ($0, $1, $2) => $2 in data ? data[$2] : "");
+	return template.replace(/(\$\{([^\{\}]+)\})/g, ($0, $1, $2) => getObject($2, data));
 }
 
 export function toDollars(amount) {

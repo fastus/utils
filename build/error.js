@@ -24,13 +24,13 @@ function _makeError(text) {
 }
 
 function getText(displayName, key, user, fallback) {
-	return (0, _ablLang.translate)("error/server/" + displayName + "-" + key, user) || displayName.charAt(0).toUpperCase() + displayName.slice(1) + " " + fallback;
+	return (0, _ablLang.translate)("error.server." + displayName + "-" + key, user) || displayName.charAt(0).toUpperCase() + displayName.slice(1) + " " + fallback;
 }
 
 function makeError(key, user) {
 	var code = arguments.length <= 2 || arguments[2] === undefined ? 400 : arguments[2];
 
-	return _makeError((0, _ablLang.translate)("error/server/" + key, user), code);
+	return _makeError((0, _ablLang.translate)("error.server." + key, user), code);
 }
 
 function checkModel(user) {

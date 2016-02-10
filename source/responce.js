@@ -29,7 +29,7 @@ export function sendError(error, request, response, next) {
 		const key = error.message.match(/\$(\S+)/)[1];
 		return send({
 			status: 400,
-			message: translate("error/mongo/" + key, request.user) || translate("error/mongo/E11000", request.user)
+			message: translate("error.mongo." + key, request.user) || translate("error.mongo.E11000", request.user)
 		});
 	}
 	if (error.type === "StripeCardError" || error.type === "StripeInvalidRequest") {

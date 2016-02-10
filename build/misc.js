@@ -13,6 +13,8 @@ var _crypto = require("crypto");
 
 var _crypto2 = _interopRequireDefault(_crypto);
 
+var _ablLang = require("abl-lang");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function isType(variable, type) {
@@ -36,7 +38,7 @@ function getRandomString() {
 
 function tpl(template, data) {
 	return template.replace(/(\$\{([^\{\}]+)\})/g, function ($0, $1, $2) {
-		return $2 in data ? data[$2] : "";
+		return (0, _ablLang.getObject)($2, data);
 	});
 }
 
