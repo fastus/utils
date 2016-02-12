@@ -30,7 +30,7 @@ export function checkModel(user) {
 }
 
 export function checkUser(user) {
-	return function checkOperatorInner(model) {
+	return function checkUserInner(model) {
 		if (user._id.toString() !== model[this.constructor.realm]._id.toString()) {
 			throw makeError("access-denied", user, 403);
 		} else {
