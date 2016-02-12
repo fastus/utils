@@ -5,8 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.makeError = makeError;
 exports.checkModel = checkModel;
-exports.checkOperator = checkOperator;
-exports.checkAdministrator = checkAdministrator;
+exports.checkUser = checkUser;
 exports.checkActive = checkActive;
 exports.checkPast = checkPast;
 
@@ -43,20 +42,10 @@ function checkModel(user) {
 	};
 }
 
-function checkOperator(operator) {
+function checkUser(user) {
 	return function checkOperatorInner(model) {
-		if (operator._id.toString() !== model.operator._id.toString()) {
-			throw makeError("access-denied", operator, 403);
-		} else {
-			return model;
-		}
-	};
-}
-
-function checkAdministrator(operator) {
-	return function checkOperatorInner(model) {
-		if (operator._id.toString() !== model.administrator._id.toString()) {
-			throw makeError("access-denied", operator, 403);
+		if (user._id.toString() !== model[this.constructor.realm]._id.toString()) {
+			throw makeError("access-denied", user, 403);
 		} else {
 			return model;
 		}
