@@ -23,7 +23,7 @@ function _makeError(text) {
 }
 
 function getText(displayName, key, user, fallback) {
-	return (0, _ablLang.translate)("error.server." + displayName + "-" + key, user) || displayName.charAt(0).toUpperCase() + displayName.slice(1) + " " + fallback;
+	return (0, _ablLang.translate)("error.server." + displayName.toLowerCase() + "-" + key, user) || displayName + " " + fallback;
 }
 
 function makeError(key, user) {
@@ -35,7 +35,7 @@ function makeError(key, user) {
 function checkModel(user) {
 	return function checkModelInner(model) {
 		if (!model) {
-			throw _makeError(getText(this.displayName, "not-found", user, "Not Found"), 404);
+			throw _makeError(getText(this.constructor.displayName, "not-found", user, "Not Found"), 404);
 		} else {
 			return model;
 		}
@@ -43,7 +43,7 @@ function checkModel(user) {
 }
 
 function checkUser(user) {
-	return function checkOperatorInner(model) {
+	return function checkUserInner(model) {
 		if (user._id.toString() !== model[this.constructor.realm]._id.toString()) {
 			throw makeError("access-denied", user, 403);
 		} else {
@@ -59,7 +59,7 @@ function checkActive() {
 		var isAdmin = !request.user.apiKeys[0].public;
 		var isActive = model.status === this.constructor.statuses.active;
 		if (!isActive && !(isAllowed && isAdmin)) {
-			throw _makeError(getText(this.displayName, "not-active", request.user, "Is Not Active"), 400);
+			throw _makeError(getText(this.constructor.displayName, "not-active", request.user, "Is Not Active"), 400);
 		} else {
 			return model;
 		}
