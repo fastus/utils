@@ -94,48 +94,4 @@ describe("#Response", () => {
 		});
 		after(() => { process.env.NODE_ENV = "test"; });
 	});
-
-	describe.skip("#wrapJSON", () => {
-
-		class TestController {
-
-			constructor(request, response) {
-				this.request = request;
-				this.response = response;
-			}
-
-			testWrapJson() {
-				return this.request + 1;
-			}
-
-			then() {
-				return this;
-			}
-
-		}
-
-		const testController = new TestController(5);
-
-		it("wrapJSON...", () => {
-			//wrapJSON(testController.testWrapJson.bind(testController));
-			//console.log(testController.testWrapJson());
-			//const xxx = wrapJSON(testController.testWrapJson.bind(testController));
-			//assert.equal(xxx(), "");
-
-			//return result.then((data) => {
-			//	//expect(data).to.equal(blah);
-			//	assert.equal(data, blah);
-			//});
-
-			const promise = new Promise(resolve => {resolve("I am a Model")});
-			const models = ["first model"];
-			addModelFromPromise(promise, models);
-			promise.then(() => {
-				assert.equal(models, ["first model", "I am a Model"]);
-				done();
-			});
-
-		});
-	});
-
 });
