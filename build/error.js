@@ -43,8 +43,10 @@ function checkModel(user) {
 }
 
 function checkUser(user) {
+	var condition = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
 	return function checkUserInner(model) {
-		if (user._id.toString() !== model[this.constructor.realm]._id.toString()) {
+		if (user._id.toString() === model[this.constructor.realm]._id.toString() === condition) {
 			throw makeError("access-denied", user, 403);
 		} else {
 			return model;

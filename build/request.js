@@ -35,17 +35,9 @@ function getCurrency(user) {
 }
 
 function setStatus(clean, query, constructor) {
-	var status = (0, _misc.isType)(query.status, "Object") ? query.status[constructor.name.slice(0, -10).toLowerCase()] : query.status;
-	switch (status) {
-		case "all":
-			break;
-		case "inactive":
-			Object.assign(clean, { status: constructor.statuses.inactive });
-			break;
-		case "active":
-		default:
-			Object.assign(clean, { status: constructor.statuses.active });
-			break;
+	var status = (0, _misc.isType)(query.status, "Object") ? query.status[constructor.displayName.toLowerCase()] : query.status;
+	if (status !== "all") {
+		Object.assign(clean, { status: constructor.statuses[status in constructor.statuses ? status : "active"] });
 	}
 }
 
