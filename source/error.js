@@ -29,9 +29,9 @@ export function checkModel(user) {
 	};
 }
 
-export function checkUser(user) {
+export function checkUser(user, condition = false) {
 	return function checkUserInner(model) {
-		if (user._id.toString() !== model[this.constructor.realm]._id.toString()) {
+		if (user._id.toString() === model[this.constructor.realm]._id.toString() === condition) {
 			throw makeError("access-denied", user, 403);
 		} else {
 			return model;
