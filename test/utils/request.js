@@ -53,6 +53,7 @@ describe("#Request", () => {
 
 	describe("#setStatus", () => {
 		class TestController {
+			static displayName = "test2";
 			static statuses = {
 				active: "active",
 				inactive: "inactive"
@@ -62,8 +63,9 @@ describe("#Request", () => {
 			active: {status: "active"},
 			inactive: {status: "inactive"},
 			all: {status: "all"},
-			test: {status: {test: "inactive", test2: "active"}},
-			test2: {status: {test: "fakestatus"}}
+			test1: {status: {test1: "inactive", test2: "inactive"}},
+			test2: {status: {test1: "active"}},
+			test3: {status: {test1: "active", test2: "fakestatus"}}
 			};
 
 		it("setStatus status=inactive", () => {
@@ -81,14 +83,19 @@ describe("#Request", () => {
 			setStatus(clean, query.all, TestController);
 			assert.deepEqual(clean, {});
 		});
-		it("setStatus status type is Object", () => { /////////////
+		it("setStatus status type is Object (default)", () => {
 			const clean = {};
-			setStatus(clean, query.test, TestController);
+			setStatus(clean, query.test1, TestController);
 			assert.deepEqual(clean, {status: "inactive"});
+		});
+		it("setStatus status type is Object (actual)", () => {
+			const clean = {};
+			setStatus(clean, query.test2, TestController);
+			assert.deepEqual(clean, {status: "active"});
 		});
 		it("setStatus status type is Object with fake status", () => {
 			const clean = {};
-			setStatus(clean, query.test2, TestController);
+			setStatus(clean, query.test3, TestController);
 			assert.deepEqual(clean, {status: "active"});
 		});
 
