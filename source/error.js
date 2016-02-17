@@ -39,6 +39,27 @@ export function checkUser(user, condition = false) {
 	};
 }
 
+export function checkOwner(user, condition = false) {
+	return function checkOwnerInner(model) {
+		if (user._id.toString() === model.owner.toString() === condition) {
+			throw makeError("access-denied", user, 403);
+		} else {
+			return model;
+		}
+	};
+}
+
+export function checkDefault(defaultContract) {
+	return function checkDefaultInner(model, request) {
+		const isDefault = request.params._id.toString() === defaultContract._id.toString();
+		if (isDefault && !request.body.default) {
+			throw makeError("contract-must-have-default-contract", 400);
+		} else {
+			return model;
+		}
+	};
+}
+
 export function checkActive(isAllowed = false) {
 	return function checkActiveInner(model, request) {
 		const isAdmin = !request.user.apiKeys[0].public;

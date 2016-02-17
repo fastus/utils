@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.makeError = makeError;
 exports.checkModel = checkModel;
 exports.checkUser = checkUser;
+exports.checkOwner = checkOwner;
+exports.checkDefault = checkDefault;
 exports.checkActive = checkActive;
 exports.checkPast = checkPast;
 
@@ -48,6 +50,29 @@ function checkUser(user) {
 	return function checkUserInner(model) {
 		if (user._id.toString() === model[this.constructor.realm]._id.toString() === condition) {
 			throw makeError("access-denied", user, 403);
+		} else {
+			return model;
+		}
+	};
+}
+
+function checkOwner(user) {
+	var condition = arguments.length <= 1 || arguments[1] === undefined ? false : arguments[1];
+
+	return function checkOwnerInner(model) {
+		if (user._id.toString() === model.owner.toString() === condition) {
+			throw makeError("access-denied", user, 403);
+		} else {
+			return model;
+		}
+	};
+}
+
+function checkDefault(defaultContract) {
+	return function checkDefaultInner(model, request) {
+		var isDefault = request.params._id.toString() === defaultContract._id.toString();
+		if (isDefault && !request.body.default) {
+			throw makeError("contract-must-have-default-contract", 400);
 		} else {
 			return model;
 		}
