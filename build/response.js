@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 exports.sendError = sendError;
+exports.addPaginationHeaders = addPaginationHeaders;
 exports.wrapJSON = wrapJSON;
 exports.wrapFile = wrapFile;
 exports.wrapStripe = wrapStripe;
@@ -11,6 +12,12 @@ exports.wrapStripe = wrapStripe;
 var _debug = require("debug");
 
 var _debug2 = _interopRequireDefault(_debug);
+
+var _querystring = require("querystring");
+
+var _querystring2 = _interopRequireDefault(_querystring);
+
+var _misc = require("./misc");
 
 var _error = require("./error");
 
@@ -65,6 +72,35 @@ function sendError(error, request, response, next) {
 		}
 	}
 	return send(error);
+}
+
+function addPaginationHeaders(request, response, count, server) {
+	var last = Math.ceil(count / request.query.pageSize);
+	var url = (0, _misc.formatUrl)(server) + request.route.path + "?";
+
+	response.set("X-First-Page-Url", url + _querystring2.default.stringify({
+		pageSize: request.query.pageSize,
+		page: 0
+	}));
+
+	if (request.query.page !== 0) {
+		response.set("X-Prev-Page-Url", url + _querystring2.default.stringify({
+			pageSize: request.query.pageSize,
+			page: request.query.page - 1
+		}));
+	}
+
+	if (request.query.page !== last) {
+		response.set("X-Next-Page-Url", url + _querystring2.default.stringify({
+			pageSize: request.query.pageSize,
+			page: request.query.page + 1
+		}));
+	}
+
+	response.set("X-Last-Page-Url", url + _querystring2.default.stringify({
+		pageSize: request.query.pageSize,
+		page: last
+	}));
 }
 
 function wrapJSON(method) {
