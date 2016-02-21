@@ -1,7 +1,7 @@
 "use strict";
 
 import assert from "power-assert";
-import moment from "moment";
+import moment from "abl-constants/build/moment";
 import {getEventInstanceId, getEventId, getEventDate} from "../../source/event";
 
 describe("#Event", () => {

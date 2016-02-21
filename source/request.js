@@ -1,6 +1,5 @@
 "use strict";
 
-import timezone from "moment-timezone"; // eslint-disable-line no-unused-vars
 import escapeStringRegexp from "escape-string-regexp";
 import {isType} from "./misc";
 

@@ -1,6 +1,6 @@
 "use strict";
 
-import moment from "moment";
+import moment from "abl-constants/build/moment";
 import {date} from "abl-constants/build/date";
 import {checkPast, makeError, checkModel, checkUser, checkActive} from "../../source/error";
 import {translate} from "abl-lang";

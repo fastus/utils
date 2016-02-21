@@ -1,7 +1,6 @@
 "use strict";
 
-import moment from "moment";
-import timezone from "moment-timezone"; // eslint-disable-line no-unused-vars
+import moment from "abl-constants/build/moment";
 import {googleFormat} from "abl-constants/build/date";
 
 
