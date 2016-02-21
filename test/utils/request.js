@@ -98,11 +98,9 @@ describe("#Request", () => {
 			setStatus(clean, query.test3, TestController);
 			assert.deepEqual(clean, {status: "active"});
 		});
-
 	});
 
 	describe("#setRegExp", () => {
-
 		it("setRegExp with an array of queries", () => {
 			const clean = {};
 			const query = {email: "trejgun@gmail.com", fakedata: "L(&*^%$#%hvutcy//\fty56ctz53@$!@#$%^&*", crap: "crap"};
@@ -126,5 +124,4 @@ describe("#Request", () => {
 			assert.deepEqual(clean, {});
 		});
 	});
-
 });

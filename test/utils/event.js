@@ -5,7 +5,6 @@ import moment from "moment";
 import {getEventInstanceId, getEventId, getEventDate} from "../../source/event";
 
 describe("#Event", () => {
-
 	describe("#getEventInstanceId", () => {
 		const eventId = "12345678901234567890123456";
 
@@ -42,5 +41,4 @@ describe("#Event", () => {
 			assert.deepEqual(getEventDate(eventInstanceId), date);
 		});
 	});
-
 });

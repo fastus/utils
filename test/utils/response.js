@@ -1,6 +1,6 @@
 "use strict";
 
-import {sendError, wrapJSON, addModelFromPromise} from "../../source/response";
+import {sendError} from "../../source/response";
 import assert from "power-assert";
 
 describe("#Response", () => {
