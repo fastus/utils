@@ -2,7 +2,7 @@
 
 import moment from "abl-constants/build/moment";
 import {googleFormat, ISO_8601} from "abl-constants/build/date";
-import {isType} from "abl-constants/build/misc";
+import {isType} from "./misc";
 
 
 export function getEventInstanceId(eventId, time) {
