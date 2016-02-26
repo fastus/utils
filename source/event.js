@@ -1,7 +1,8 @@
 "use strict";
 
 import moment from "abl-constants/build/moment";
-import {googleFormat} from "abl-constants/build/date";
+import {googleFormat, ISO_8601} from "abl-constants/build/date";
+import {isType} from "abl-constants/build/misc";
 
 
 export function getEventInstanceId(eventId, time) {
@@ -14,4 +15,16 @@ export function getEventId(eventInstanceId) {
 
 export function getEventDate(eventInstanceId) {
 	return moment.tz(eventInstanceId.split("_")[1], googleFormat, "UTC").toDate();
+}
+
+export function parseDate(date) {
+	switch (true) {
+		case isType(date, "Number"):
+		case isType(date, "Date"):
+			return moment(date);
+		case isType(date, "String"):
+			return moment.tz(date, ISO_8601, "UTC");
+		default:
+			return moment(null);
+	}
 }

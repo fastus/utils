@@ -8,10 +8,6 @@ exports.getCurrency = getCurrency;
 exports.setStatus = setStatus;
 exports.setRegExp = setRegExp;
 
-var _momentTimezone = require("moment-timezone");
-
-var _momentTimezone2 = _interopRequireDefault(_momentTimezone);
-
 var _escapeStringRegexp = require("escape-string-regexp");
 
 var _escapeStringRegexp2 = _interopRequireDefault(_escapeStringRegexp);
@@ -20,7 +16,7 @@ var _misc = require("./misc");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } // eslint-disable-line no-unused-vars
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function getIP(request) {
 	return request.get("CF-Connecting-IP") || request.ip;

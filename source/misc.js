@@ -3,8 +3,12 @@
 import crypto from "crypto";
 import {getObject} from "abl-lang";
 
+export function getType(variable) {
+	return Object.prototype.toString.call(variable);
+}
+
 export function isType(variable, type) {
-	return Object.prototype.toString.call(variable) === "[object " + type + "]";
+	return getType(variable) === "[object " + type + "]";
 }
 
 export function getRandomString(length = 64, type = 3) {

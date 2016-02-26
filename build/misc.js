@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.getType = getType;
 exports.isType = isType;
 exports.getRandomString = getRandomString;
 exports.tpl = tpl;
@@ -17,8 +18,12 @@ var _ablLang = require("abl-lang");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function getType(variable) {
+	return Object.prototype.toString.call(variable);
+}
+
 function isType(variable, type) {
-	return Object.prototype.toString.call(variable) === "[object " + type + "]";
+	return getType(variable) === "[object " + type + "]";
 }
 
 function getRandomString() {
