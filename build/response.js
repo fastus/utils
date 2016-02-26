@@ -76,7 +76,7 @@ function sendError(error, request, response, next) {
 
 function addPaginationHeaders(request, response, count, server) {
 	var last = Math.ceil(count / request.query.pageSize);
-	var url = (0, _misc.formatUrl)(server) + request.route.path + "?";
+	var url = "" + (0, _misc.formatUrl)(server) + request.route.path + "?";
 
 	response.set("X-First-Page-Url", url + _querystring2.default.stringify({
 		pageSize: request.query.pageSize,
