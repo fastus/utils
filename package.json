@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.1.2",
-    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.1.6",
+    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.1.7",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.5",
     "qs": "6.1.0"
