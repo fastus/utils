@@ -24,6 +24,8 @@ export function parseDate(date) {
 			return moment(date);
 		case isType(date, "String"):
 			return moment.tz(date, ISO_8601, "UTC");
+		case isType(date, "Object"):
+			return date;
 		default:
 			return moment(null);
 	}
