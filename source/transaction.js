@@ -12,5 +12,5 @@ export function printAA(charges, type) {
 			}
 			obj[charge.name]++;
 		});
-	return Object.keys(obj).map(key => key + " x " + obj[key]);
+	return Object.keys(obj).map(key => `${key} x ${obj[key]}`);
 }

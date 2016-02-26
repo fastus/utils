@@ -9,5 +9,5 @@ export function sign(apiSecret, urlString, timestamp) {
 }
 
 export function getUrl(url, body) {
-	return url + (!Object.getOwnPropertyNames(body).length ? "" : "?" + qs.stringify(body, {arrayFormat: "indices"}));
+	return url + (!Object.getOwnPropertyNames(body).length ? "" : `?${qs.stringify(body, {arrayFormat: "indices"})}`);
 }

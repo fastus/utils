@@ -8,7 +8,7 @@ export function getType(variable) {
 }
 
 export function isType(variable, type) {
-	return getType(variable) === "[object " + type + "]";
+	return getType(variable) === `[object ${type}]`;
 }
 
 export function getRandomString(length = 64, type = 3) {
@@ -39,5 +39,5 @@ export function toDollars(amount) {
 
 export function formatUrl({protocol, hostname, port}) {
 	// url.format puts port 80 which we dont need
-	return `${protocol}://${hostname}${port === "80" ? "" : ":" + port}/`;
+	return `${protocol}://${hostname}${port === "80" ? "" : `:${port}`}/`;
 }

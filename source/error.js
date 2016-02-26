@@ -16,7 +16,7 @@ function getText(displayName, key, user, fallback) {
 }
 
 export function makeError(key, user, code = 400) {
-	return _makeError(translate("error.server." + key, user), code);
+	return _makeError(translate(`error.server.${key}`, user), code);
 }
 
 export function checkModel(user) {

@@ -32,7 +32,7 @@ export function sendError(error, request, response, next) {
 		const key = error.message.match(/\$(\S+)/)[1];
 		return send({
 			status: 400,
-			message: translate("error.mongo." + key, request.user) || translate("error.mongo.E11000", request.user)
+			message: translate(`error.mongo.${key}`, request.user) || translate("error.mongo.E11000", request.user)
 		});
 	}
 	if (error.type === "StripeCardError" || error.type === "StripeInvalidRequest") {
@@ -56,7 +56,7 @@ export function sendError(error, request, response, next) {
 
 export function addPaginationHeaders(request, response, count, server) {
 	const last = Math.ceil(count / request.query.pageSize);
-	const url = formatUrl(server) + request.route.path + "?";
+	const url = `${formatUrl(server)}${request.route.path}?`;
 
 	response.set("X-First-Page-Url", url + querystring.stringify({
 			pageSize: request.query.pageSize,

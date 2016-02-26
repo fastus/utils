@@ -6,7 +6,7 @@ import {isType} from "abl-constants/build/misc";
 
 
 export function getEventInstanceId(eventId, time) {
-	return eventId + "_" + moment.tz(time, "UTC").format(googleFormat);
+	return `${eventId}_${moment.tz(time, "UTC").format(googleFormat)}`;
 }
 
 export function getEventId(eventInstanceId) {
