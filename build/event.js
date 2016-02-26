@@ -37,6 +37,8 @@ function parseDate(date) {
 			return (0, _moment2.default)(date);
 		case (0, _misc.isType)(date, "String"):
 			return _moment2.default.tz(date, _date.ISO_8601, "UTC");
+		case (0, _misc.isType)(date, "Object"):
+			return date;
 		default:
 			return (0, _moment2.default)(null);
 	}
