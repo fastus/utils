@@ -23,7 +23,13 @@ var _error = require("./error");
 
 var _ablLang = require("abl-lang");
 
+var _config = require("./configs/config");
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var config = _config2.default[process.env.NODE_ENV];
 
 var log = (0, _debug2.default)("utils:response");
 
@@ -74,9 +80,9 @@ function sendError(error, request, response, next) {
 	return send(error);
 }
 
-function addPaginationHeaders(request, response, count, server) {
+function addPaginationHeaders(request, response, count) {
 	var last = Math.ceil(count / request.query.pageSize);
-	var url = "" + (0, _misc.formatUrl)(server) + request.route.path + "?";
+	var url = "" + (0, _misc.formatUrl)(config.server) + request.route.path + "?";
 
 	response.set("X-First-Page-Url", url + _querystring2.default.stringify({
 		pageSize: request.query.pageSize,

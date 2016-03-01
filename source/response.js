@@ -5,7 +5,9 @@ import querystring from "querystring";
 import {formatUrl} from "./misc";
 import {makeError} from "./error";
 import {translate} from "abl-lang";
+import configs from "./configs/config";
 
+const config = configs[process.env.NODE_ENV];
 
 const log = debug("utils:response");
 
@@ -54,9 +56,9 @@ export function sendError(error, request, response, next) {
 	return send(error);
 }
 
-export function addPaginationHeaders(request, response, count, server) {
+export function addPaginationHeaders(request, response, count) {
 	const last = Math.ceil(count / request.query.pageSize);
-	const url = `${formatUrl(server)}${request.route.path}?`;
+	const url = `${formatUrl(config.server)}${request.route.path}?`;
 
 	response.set("X-First-Page-Url", url + querystring.stringify({
 			pageSize: request.query.pageSize,
