@@ -30,11 +30,3 @@ export function parseDate(date) {
 			return moment(null);
 	}
 }
-
-export function isOutOfNewRange(timeslot, event) {
-	return (
-		(timeslot.isStartTimeChanged && moment.range(timeslot.originalStartTime, timeslot.startTime).contains(event.startTime, true)) ||
-		(timeslot.isUntilTimeChanged && moment.range(timeslot.untilTime, timeslot.originalUntilTime).contains(event.startTime, true)) ||
-		(timeslot.isDaysRunningChanged && !~timeslot.daysRunning.indexOf(moment(event.startTime).day()))
-	);
-}

@@ -7,7 +7,6 @@ exports.getEventInstanceId = getEventInstanceId;
 exports.getEventId = getEventId;
 exports.getEventDate = getEventDate;
 exports.parseDate = parseDate;
-exports.isOutOfNewRange = isOutOfNewRange;
 
 var _moment = require("abl-constants/build/moment");
 
@@ -43,8 +42,4 @@ function parseDate(date) {
 		default:
 			return (0, _moment2.default)(null);
 	}
-}
-
-function isOutOfNewRange(timeslot, event) {
-	return timeslot.isStartTimeChanged && _moment2.default.range(timeslot.originalStartTime, timeslot.startTime).contains(event.startTime, true) || timeslot.isUntilTimeChanged && _moment2.default.range(timeslot.untilTime, timeslot.originalUntilTime).contains(event.startTime, true) || timeslot.isDaysRunningChanged && ! ~timeslot.daysRunning.indexOf((0, _moment2.default)(event.startTime).day());
 }
