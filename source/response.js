@@ -20,6 +20,10 @@ function _send(request, response) {
 	};
 }
 
+export function processValidationError(error) {
+	return Object.keys(error.errors).map(key => error.errors[key].reason || error.errors[key].message);
+}
+
 export function sendError(error, request, response, next) {
 	log("sendError", error);
 	void next; // eslint
@@ -27,7 +31,7 @@ export function sendError(error, request, response, next) {
 	if (error.name === "ValidationError") {
 		return send({
 			status: 409,
-			message: Object.keys(error.errors).map(key => error.errors[key].message)
+			message: processValidationError(error)
 		});
 	}
 	if (error.name === "MongoError" && error.code === 11000) {
