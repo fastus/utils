@@ -1,7 +1,7 @@
 {
   "name": "abl-utils",
   "title": "ABL - utils",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "license": "MIT",
   "description": "description",
   "homepage": "http://adventurebucketlist.com/",
@@ -18,6 +18,9 @@
   "bugs": {
     "url": "https://github.com/bucket-list/API/issues"
   },
+  "files": [
+    "source"
+  ],
   "dependencies": {
     "abl-constants": "git+ssh://github.com/bucket-list/constants.git#0.1.2",
     "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.1.8",
@@ -42,7 +45,12 @@
     "node": ">=5.0.0"
   },
   "scripts": {
+    "postinstall": "babel -d ./build ./source",
     "build": "rm -rf build && babel -d ./build ./source",
+    "pull": "git checkout master && git pull origin master",
+    "push": "git push origin master --tags && exit 0 && npm publish",
+    "commit": "git commit -a -m ${1}",
+    "release": "npm run pull && npm version ${1:-patch} && npm run push",
     "lint": "eslint source/*",
     "test": "NODE_ENV=${NODE_ENV:=test} node_modules/.bin/babel-node node_modules/.bin/_mocha",
     "coverage": "NODE_ENV=${NODE_ENV:=test} babel-node node_modules/istanbul/lib/cli cover --report text --report html node_modules/.bin/_mocha test/utils"
