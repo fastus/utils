@@ -22,8 +22,8 @@
     "source"
   ],
   "dependencies": {
-    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#v0.1.8",
-    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.1.8",
+    "abl-constants": "git+ssh://github.com/bucket-list/constants.git#v0.1.10",
+    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#0.1.9",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.5",
     "lodash": "4.6.1",
@@ -31,11 +31,11 @@
     "rrule": "2.1.0"
   },
   "devDependencies": {
-    "babel-config-trejgun": "git://github.com/TrejGun/babel-config-trejgun.git#v0.0.3",
+    "babel-config-trejgun": "git://github.com/TrejGun/babel-config-trejgun.git#v0.0.4",
     "eslint-config-trejgun": "git://github.com/TrejGun/eslint-config-trejgun.git#v0.0.2",
     "istanbul": "^1.0.0-alpha",
     "mocha": "2.4.5",
-    "power-assert": "1.2.0"
+    "power-assert": "1.3.0"
   },
   "engines": {
     "node": ">=5.0.0"
