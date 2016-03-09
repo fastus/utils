@@ -31,7 +31,7 @@
     "rrule": "2.1.0"
   },
   "devDependencies": {
-    "babel-config-trejgun": "git://github.com/TrejGun/babel-config-trejgun.git#v0.0.1",
+    "babel-config-trejgun": "git://github.com/TrejGun/babel-config-trejgun.git#v0.0.3",
     "eslint-config-trejgun": "git://github.com/TrejGun/eslint-config-trejgun.git#v0.0.2",
     "istanbul": "^1.0.0-alpha",
     "mocha": "2.4.5",
