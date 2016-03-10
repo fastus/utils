@@ -42,7 +42,6 @@
   },
   "scripts": {
     "postinstall": "babel -d ./build ./source",
-    "build": "rm -rf build && babel -d ./build ./source",
     "pull": "git checkout master && git pull origin master",
     "push": "git push origin master --tags && npm publish",
     "commit": "git commit -a -m ${1}",
