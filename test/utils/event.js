@@ -45,23 +45,27 @@ describe("#Event", () => {
 	describe("#parseDate", () => {
 		it("parseDate date type Number", () => {
 			const date = new Date().getTime();
+			assert.ok(parseDate(date).isValid());
 			assert.ok(moment(parseDate(date)).isSame(date));
 		});
 		it("parseDate date type Date", () => {
 			const date = new Date();
+			assert.ok(parseDate(date).isValid());
 			assert.ok(moment(parseDate(date)).isSame(date));
 		});
 		it("parseDate date type String", () => {
 			const date = "20160303T205500Z";
+			assert.ok(parseDate(date).isValid());
 			assert.ok(moment(parseDate(date)).isSame(date));
 		});
 		it("parseDate date type Object", () => {
 			const date = moment();
+			assert.ok(parseDate(date).isValid());
 			assert.ok(moment(parseDate(date)).isSame(date));
 		});
 		it("parseDate date null", () => {
 			const date = [];
-			assert.equal(parseDate(date), "Invalid Date");
+			assert.ok(!parseDate(date).isValid());
 		});
 	});
 });

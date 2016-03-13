@@ -21,12 +21,12 @@ export function parseDate(date) {
 	switch (true) {
 		case isType(date, "Number"):
 		case isType(date, "Date"):
-			return moment(date).toDate();
+			return moment(date);
 		case isType(date, "String"):
 			return moment.tz(date, ISO_8601, "UTC");
 		case isType(date, "Object"):
 			return date;
 		default:
-			return moment(0 / 0).toDate();
+			return moment(0 / 0);
 	}
 }
