@@ -19,7 +19,8 @@ describe("#Request", () => {
 		it("getIP without CF-Connecting-IP", () => {
 			const request = {
 				ip: "127.0.0.1",
-				get() {}
+				get() {
+				}
 			};
 			assert.equal(getIP(request), "127.0.0.1");
 		});
@@ -45,8 +46,7 @@ describe("#Request", () => {
 			assert.equal(getCurrency(user), "usd");
 		});
 		it("getCurrency with no user.payment and user.location", () => {
-			const user = {
-			};
+			const user = {};
 			assert.equal(getCurrency(user), "usd");
 		});
 	});
@@ -66,7 +66,7 @@ describe("#Request", () => {
 			test1: {status: {test1: "inactive", test2: "inactive"}},
 			test2: {status: {test1: "active"}},
 			test3: {status: {test1: "active", test2: "fakestatus"}}
-			};
+		};
 
 		it("setStatus status=inactive", () => {
 			const clean = {};

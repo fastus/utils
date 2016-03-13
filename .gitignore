@@ -1,9 +1,10 @@
 # IDEA
 .idea
+build
+coverage
 
 # Mac
 .DS_Store
 
 # NODE
 node_modules
-coverage

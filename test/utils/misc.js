@@ -31,7 +31,7 @@ describe("#Misc", () => {
 	describe("#getRandomString", () => {
 		const patterns = [/[0-9]/, /[A-Z]/, /[A-Z0-9]/, /[A-Z0-9]/i];
 		patterns.forEach((pattern, i) => {
-			it("random string for a type " + i, () => {
+			it(`random string for a type ${i}`, () => {
 				const length = Math.ceil((Math.random() * 100));
 				const str = getRandomString(length, i);
 				assert.equal(patterns[i].test(str), true);
@@ -46,10 +46,10 @@ describe("#Misc", () => {
 		});
 	});
 	describe("#isType", () => {
-		const variables = [new Object(), new Array, void 0, null, new Date(), "string", 1, new Error(), new RegExp()];
+		const variables = [new Object(), new Array, void 0, null, new Date(), "string", 1, new Error(), new RegExp()]; // eslint-disable-line no-new-object
 		const types = ["Object", "Array", "Undefined", "Null", "Date", "String", "Number", "Error", "RegExp"];
 		variables.forEach((variable, i) => {
-			it("check a type of " + variable, () => {
+			it(`check a type of ${variable}`, () => {
 				const result = isType(variable, types[i]);
 				assert.equal(result, true);
 			});

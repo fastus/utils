@@ -4,7 +4,7 @@ import {merge} from "lodash";
 import {dateFormat, timeFormat} from "abl-constants/build/date";
 import {toDollars, formatUrl} from "./misc";
 import {printAA} from "./transaction";
-import moment from "abl-constants/build/moment";
+import moment from "moment-config-trejgun";
 import {RRule} from "rrule";
 
 import configs from "./configs/config";

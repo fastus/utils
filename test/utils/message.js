@@ -4,22 +4,17 @@ import assert from "power-assert";
 import {prepare} from "../../source/message";
 import {activityObject, eventObject, timeslotObject, bookingObject, transactionObject, customerObject, operatorObject} from "abl-constants/build/objects";
 import {daysRunning, timeFormat, dateFormat, startDate} from "abl-constants/build/date";
-import moment from "abl-constants/build/moment";
+import moment from "moment-config-trejgun";
+
+const rand = () => Math.random().toString(36).substr(2);
 
 describe("Message", () => {
-
-    const rand = () => {
-        return Math.random().toString(36).substr(2);
-    };
-
-
     describe("#prepare", () => {
-
         function getData(arg) {
             return Object.assign({
                 activity: activityObject(),
                 event: eventObject(),
-                timeslot: timeslotObject({daysRunning: daysRunning}),
+                timeslot: timeslotObject({daysRunning}),
                 booking: bookingObject(),
                 transaction: transactionObject(),
                 customer: customerObject(),
@@ -36,7 +31,7 @@ describe("Message", () => {
             assert.ok(res.event.rrule);
             assert.equal(res.booking.answers, "**question 1?**\n answer 1!\n\n**question 2?**\n answer 2!");
             assert.equal(res.booking.count, 2);
-            assert.deepEqual(res.transaction, { subtotal: '$415.00', total: '$435.00', tax: '$10.00', fee: '$10.00', coupon: '' });
+            assert.deepEqual(res.transaction, {subtotal: "$415.00", total: "$435.00", tax: "$10.00", fee: "$10.00", coupon: ""});
             assert.equal(res.customer.location, "[very long street 123](https://www.google.com/maps/place/very+long+street+123)");
             assert.equal(res.hash.token, data.hash.token);
             assert.equal(res.operator.location, "[very long street 123](https://www.google.com/maps/place/very+long+street+123)");
@@ -74,7 +69,7 @@ describe("Message", () => {
         it("prepare - wrap OR cases", () => {
             const data = {};
             data.operator = operatorObject();
-            data.timeslot = timeslotObject({daysRunning: daysRunning});
+            data.timeslot = timeslotObject({daysRunning});
             data.timeslot.activity = activityObject();
             data.booking = bookingObject();
             data.booking.transaction = transactionObject();

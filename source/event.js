@@ -1,6 +1,6 @@
 "use strict";
 
-import moment from "abl-constants/build/moment";
+import moment from "moment-config-trejgun";
 import {googleFormat, ISO_8601} from "abl-constants/build/date";
 import {isType} from "./misc";
 
@@ -21,12 +21,12 @@ export function parseDate(date) {
 	switch (true) {
 		case isType(date, "Number"):
 		case isType(date, "Date"):
-			return moment(date);
+			return moment(date).toDate();
 		case isType(date, "String"):
 			return moment.tz(date, ISO_8601, "UTC");
 		case isType(date, "Object"):
 			return date;
 		default:
-			return moment(null);
+			return moment(0 / 0).toDate();
 	}
 }
