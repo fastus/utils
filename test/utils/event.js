@@ -2,8 +2,8 @@
 
 import assert from "power-assert";
 import moment from "abl-constants/build/moment";
-import {date, startDate, untilDate} from "abl-constants/build/date";
-import {getEventInstanceId, getEventId, getEventDate, isOutOfNewRange} from "../../source/event";
+import {date} from "abl-constants/build/date";
+import {getEventInstanceId, getEventId, getEventDate, parseDate} from "../../source/event";
 
 describe("#Event", () => {
 	describe("#getEventInstanceId", () => {
@@ -43,157 +43,29 @@ describe("#Event", () => {
 		});
 	});
 
-	describe.only("#isOutOfNewRange", () => {
-		it("startTime moved forward (|-*-| -> *|---|)", () => {
-			const timeslot = {
-				isStartTimeChanged: true,
-				startTime: moment(startDate).add(2, "d"),
-				originalStartTime: moment(startDate).add(0, "d"),
-
-				isUntilTimeChanged: false,
-				untilTime: untilDate,
-				originalUntilTime: untilDate,
-
-				isDaysRunningChanged: false,
-				daysRunning: [0, 1, 2, 3, 4, 5, 6]
-			};
-			const event = {
-				startTime: moment(startDate).add(1, "d")
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), true);
+	describe("#parseDate", () => {
+		it("parseDate date type Number", () => {
+			const date = Date.parse("Mar 3, 2016");
+			assert.deepEqual(parseDate(date), moment(1456934400000));
 		});
-
-		it("startTime moved forward (|-*-| -> |*--|)", () => {
-			const timeslot = {
-				isStartTimeChanged: true,
-				startTime: moment(startDate).add(1, "d"),
-				originalStartTime: moment(startDate).add(0, "d"),
-
-				isUntilTimeChanged: false,
-				untilTime: untilDate,
-				originalUntilTime: untilDate,
-
-				isDaysRunningChanged: false,
-				daysRunning: [0, 1, 2, 3, 4, 5, 6]
-			};
-			const event = {
-				startTime: moment(startDate).add(2, "d")
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), false);
+		it("parseDate date type Date", () => {
+			const date = new Date('Mar 3, 2016');
+			assert.deepEqual(parseDate(date), moment(date));
 		});
-
-		it("startTime moved backward (|-*-| -> |--*|)", () => {
-			const timeslot = {
-				isStartTimeChanged: true,
-				startTime: moment(startDate).add(1, "d"),
-				originalStartTime: moment(startDate).add(2, "d"),
-
-				isUntilTimeChanged: false,
-				untilTime: untilDate,
-				originalUntilTime: untilDate,
-
-				isDaysRunningChanged: false,
-				daysRunning: [0, 1, 2, 3, 4, 5, 6]
-			};
-			const event = {
-				startTime: moment(startDate).add(3, "d")
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), false);
+		it("parseDate date type String", () => {
+			const date = "20160303T205500Z";
+			const result = moment.tz(date, "YYYY-MM-DD\\THH:mm:ss\\Z", "UTC");
+			assert.deepEqual(parseDate(date), result);
 		});
-
-		it("untilTime moved forward (|-*-| -> |*--|)", () => {
-			const timeslot = {
-				isStartTimeChanged: false,
-				startTime: startDate,
-				originalStartTime: startDate,
-
-				isUntilTimeChanged: true,
-				untilTime: moment(untilDate).add(2, "d"),
-				originalUntilTime: moment(untilDate).add(0, "d"),
-
-				isDaysRunningChanged: false,
-				daysRunning: [0, 1, 2, 3, 4, 5, 6]
-			};
-			const event = {
-				startTime: moment(untilDate).add(-1, "d")
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), false);
+		it("parseDate date type Object", () => {
+			const date = {date: "20160303T205500Z"};
+			assert.equal(parseDate(date), date);
 		});
-
-		it("untilTime moved backward (|-*-| -> |--*|)", () => {
-			const timeslot = {
-				isStartTimeChanged: false,
-				startTime: startDate,
-				originalStartTime: startDate,
-
-				isUntilTimeChanged: true,
-				untilTime: moment(untilDate).add(-1, "d"),
-				originalUntilTime: moment(untilDate).add(0, "d"),
-
-				isDaysRunningChanged: false,
-				daysRunning: [0, 1, 2, 3, 4, 5, 6]
-			};
-			const event = {
-				startTime: moment(untilDate).add(-2, "d")
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), false);
-		});
-
-		it("untilTime moved backward (|-*-| -> |---|*)", () => {
-			const timeslot = {
-				isStartTimeChanged: false,
-				startTime: startDate,
-				originalStartTime: startDate,
-
-				isUntilTimeChanged: true,
-				untilTime: moment(untilDate).add(-2, "d"),
-				originalUntilTime: moment(untilDate).add(0, "d"),
-
-				isDaysRunningChanged: false,
-				daysRunning: [0, 1, 2, 3, 4, 5, 6]
-			};
-			const event = {
-				startTime: moment(untilDate).add(-1, "d")
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), true);
-		});
-
-		it("daysRunning changed ([0..6] -> [0..6])", () => {
-			const timeslot = {
-				isStartTimeChanged: false,
-				startTime: startDate,
-				originalStartTime: startDate,
-
-				isUntilTimeChanged: false,
-				untilTime: untilDate,
-				originalUntilTime: untilDate,
-
-				isDaysRunningChanged: true,
-				daysRunning: [0, 1, 2, 3, 4, 5, 6]
-			};
-			const event = {
-				startTime: startDate
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), false);
-		});
-
-		it("daysRunning changed ([0..6] -> [])", () => {
-			const timeslot = {
-				isStartTimeChanged: false,
-				startTime: startDate,
-				originalStartTime: startDate,
-
-				isUntilTimeChanged: false,
-				untilTime: untilDate,
-				originalUntilTime: untilDate,
-
-				isDaysRunningChanged: true,
-				daysRunning: []
-			};
-			const event = {
-				startTime: startDate
-			};
-			assert.equal(isOutOfNewRange(timeslot, event), true);
+		it("parseDate date null", () => {
+			const date = new Array();
+			const result = parseDate(date);
+			const check = moment(null);
+			assert.equal(result._d.toString(), check._d.toString());
 		});
 	});
 });
