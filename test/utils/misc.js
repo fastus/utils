@@ -6,10 +6,10 @@ import {formatUrl, toDollars, tpl, getRandomString, isType} from "../../source/m
 describe("#Misc", () => {
 	describe("#formatUrl", () => {
 		it("should format url", () => {
-			assert.equal(formatUrl({protocol: "https", hostname: "localhost", port: "443"}), "https://localhost:443/");
+			assert.equal(formatUrl({protocol: "https", hostname: "localhost", port: "443"}), "https://localhost:443");
 		});
 		it("should omit port 80", () => {
-			assert.equal(formatUrl({protocol: "http", hostname: "localhost", port: "80"}), "http://localhost/");
+			assert.equal(formatUrl({protocol: "http", hostname: "localhost", port: "80"}), "http://localhost");
 		});
 	});
 	describe("#toDollars", () => {
