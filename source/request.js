@@ -17,7 +17,7 @@ export function getCurrency(user) {
 }
 
 export function setStatus(clean, query, constructor) {
-	const status = isType(query.status, "Object") ? query.status[constructor.displayName.toLowerCase()] : query.status;
+	const status = isType(query.status, "Object") ? query.status[constructor.name.slice(0, -10).toLowerCase()] : query.status;
 	if (status !== "all") {
 		Object.assign(clean, {status: constructor.statuses[status in constructor.statuses ? status : "active"]});
 	}
