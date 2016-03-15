@@ -55,30 +55,29 @@ describe("#Request", () => {
 		class TestController {
 			static displayName = "test2";
 			static statuses = {
-				active: "active",
-				inactive: "inactive"
+				active: "active"
 			};
 		}
 		const query = {
 			active: {status: "active"},
-			inactive: {status: "inactive"},
+			fake: {status: "fakestatus"},
 			all: {status: "all"},
-			test1: {status: {test1: "inactive", test2: "inactive"}},
-			test2: {status: {test1: "active"}},
-			test3: {status: {test1: "active", test2: "fakestatus"}}
+			test1: {status: {}},
+			test2: {status: {test: "active"}},
+			test3: {status: {test: "fakestatus"}}
 		};
 
-		it("setStatus status=inactive", () => {
-			const clean = {};
-			setStatus(clean, query.inactive, TestController);
-			assert.deepEqual(clean, {status: "inactive"});
-		});
-		it("setStatus status=active", () => {
+		it("setStatus status type is String (actual)", () => {
 			const clean = {};
 			setStatus(clean, query.active, TestController);
 			assert.deepEqual(clean, {status: "active"});
 		});
-		it("setStatus status=all", () => {
+		it("setStatus status type is String (default)", () => {
+			const clean = {};
+			setStatus(clean, query.fake, TestController);
+			assert.deepEqual(clean, {status: "active"});
+		});
+		it("setStatus status type is String (skipped)", () => {
 			const clean = {};
 			setStatus(clean, query.all, TestController);
 			assert.deepEqual(clean, {});
@@ -86,14 +85,14 @@ describe("#Request", () => {
 		it("setStatus status type is Object (default)", () => {
 			const clean = {};
 			setStatus(clean, query.test1, TestController);
-			assert.deepEqual(clean, {status: "inactive"});
+			assert.deepEqual(clean, {status: "active"});
 		});
 		it("setStatus status type is Object (actual)", () => {
 			const clean = {};
 			setStatus(clean, query.test2, TestController);
 			assert.deepEqual(clean, {status: "active"});
 		});
-		it("setStatus status type is Object with fake status", () => {
+		it("setStatus status type is Object (fake)", () => {
 			const clean = {};
 			setStatus(clean, query.test3, TestController);
 			assert.deepEqual(clean, {status: "active"});
