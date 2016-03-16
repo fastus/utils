@@ -1,7 +1,7 @@
 "use strict";
 
 import crypto from "crypto";
-import {getObject} from "abl-lang";
+import {getObject} from "abl-lang/build/index";
 
 export function getType(variable) {
 	return Object.prototype.toString.call(variable);

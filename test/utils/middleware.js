@@ -2,9 +2,15 @@
 
 import moment from "moment-config-trejgun";
 import {date} from "abl-constants/build/date";
-import {checkPast, makeError, checkModel, checkUser, checkOwner, checkDefault, checkActive} from "../../source/error";
+import {makeError} from "../../source/error";
+import {checkPast, checkModel, checkUser, checkOwner, checkDefault, checkActive} from "../../source/middleware";
 import {translate} from "abl-lang";
 import assert from "power-assert";
+import langServer from "abl-lang/bundle/en/server";
+import langNotFound from "abl-lang/bundle/en/not-found";
+import langNotActive from "abl-lang/bundle/en/not-active";
+import langController from "abl-lang/bundle/en/controller";
+
 
 describe("Error", () => {
 	describe("#checkPast", () => {
@@ -71,42 +77,42 @@ describe("Error", () => {
 	describe("#makeError", () => {
 		it("makeError page-not-found, user.language: 'en', 400", () => {
 			const user = {language: "en"};
-			const error = makeError("page-not-found", user, 400);
-			assert.equal(error.message, "Page Not Found");
+			const error = makeError("server.page-not-found", user, 400);
+			assert.equal(error.message, langServer["page-not-found"]);
 			assert.equal(error.status, 400);
 		});
 
 		it("makeError user = null", () => {
 			const user = null;
-			const error = makeError("page-not-found", user, 400);
-			assert.equal(error.message, "Page Not Found");
+			const error = makeError("server.page-not-found", user, 400);
+			assert.equal(error.message, langServer["page-not-found"]);
 			assert.equal(error.status, 400);
 		});
 
 		it("makeError fake-key", () => {
 			const user = {language: "en"};
-			const error = makeError("fake-key", user, 400);
+			const error = makeError("server.fake-key", user, 400);
 			assert.equal(error.message, undefined);
 			assert.equal(error.status, 400);
 		});
 
 		it("makeError empty code", () => {
 			const user = {language: "en"};
-			const error = makeError("page-not-found", user);
-			assert.equal(error.message, "Page Not Found");
+			const error = makeError("server.page-not-found", user);
+			assert.equal(error.message, langServer["page-not-found"]);
 			assert.equal(error.status, 400);
 		});
 	});
 
 	describe("#translate", () => {
 		it("translate error.server.page-not-found, user.language: 'en'", () => {
-			const path = "error.server.page-not-found";
+			const path = "server.page-not-found";
 			const user = {language: "en"};
-			assert.equal(translate(path, user), "Page Not Found");
+			assert.equal(translate(path, user), langServer["page-not-found"]);
 		});
 
 		it.skip("translate non existing language", () => {
-			const path = "error.server.page-not-found";
+			const path = "server.page-not-found";
 			const user = {language: "no-lang"};
 			assert.throws(() => {
 				translate(path, user);
@@ -114,7 +120,7 @@ describe("Error", () => {
 		});
 
 		it("translate non existing path", () => {
-			const path = "error.server.no-path-for-translate-using-translate";
+			const path = "server.no-path-for-translate-using-translate";
 			const user = {language: "en"};
 			assert.equal(translate(path, user), undefined);
 		});
@@ -122,7 +128,7 @@ describe("Error", () => {
 
 	describe("#checkModel", () => {
 		class TestController {
-			static displayName = "displayname";
+			static displayName = "Event";
 		}
 		const testController = new TestController();
 		const model = {a: true, b: false, c: {1: "3", 2: "4"}};
@@ -139,7 +145,7 @@ describe("Error", () => {
 		it("checkModel with no model", () => {
 			assert.throws(() => {
 				checkModel(user).bind(testController)();
-			}, e => e.message === "displayname Not Found");
+			}, e => e.message === langNotFound.event);
 		});
 	});
 
@@ -164,7 +170,7 @@ describe("Error", () => {
 			};
 			assert.throws(() => {
 				checkUser(user).bind(testController)(model);
-			}, e => e.message === "Access denied");
+			}, e => e.message === langServer["access-denied"]);
 		});
 
 		it("checkUser with no user", () => {
@@ -208,7 +214,7 @@ describe("Error", () => {
 			};
 			assert.throws(() => {
 				checkOwner(user, true)(model);
-			}, e => e.message === "Access denied");
+			}, e => e.message === langServer["access-denied"]);
 		});
 
 		it("checkOwner user.id != model.owner, condition=false", () => {
@@ -218,7 +224,7 @@ describe("Error", () => {
 			};
 			assert.throws(() => {
 				checkOwner(user)(model);
-			}, e => e.message === "Access denied");
+			}, e => e.message === langServer["access-denied"]);
 		});
 	});
 
@@ -236,7 +242,7 @@ describe("Error", () => {
 					params: {_id: 4950006433255},
 					body: {default: false}
 				}));
-			}, e => e.message === "You must have a default contract");
+			}, e => e.message === langController["contract-must-have-default-contract"]);
 		});
 
 		it("checkDefault !isDefault", () => {
@@ -256,7 +262,7 @@ describe("Error", () => {
 				active: "active",
 				inactive: "inactive"
 			};
-			static displayName = "Displayname";
+			static displayName = "Event";
 		}
 
 		const testController = new TestController();
@@ -265,21 +271,21 @@ describe("Error", () => {
 			const check = checkActive(false).bind(testController);
 			assert.throws(() => {
 				check({status: TestController.statuses.inactive}, {user});
-			}, e => e.message === "Displayname Is Not Active");
+			}, e => e.message === langNotActive.event);
 		});
 
 		it("checkActive isAllowed=true isAdmin=false isActive=false", () => {
 			const check = checkActive(true).bind(testController);
 			assert.throws(() => {
 				check({status: TestController.statuses.inactive}, {user});
-			}, e => e.message === "Displayname Is Not Active");
+			}, e => e.message === langNotActive.event);
 		});
 
 		it("checkActive isAllowed=false isAdmin=true isActive=false", () => {
 			const check = checkActive(false).bind(testController);
 			assert.throws(() => {
 				check({status: TestController.statuses.inactive}, {user: admin});
-			}, e => e.message === "Displayname Is Not Active");
+			}, e => e.message === langNotActive.event);
 		});
 
 		it("checkActive isAllowed=true isAdmin=false isActive=true", () => {
@@ -305,13 +311,6 @@ describe("Error", () => {
 		it("checkActive isAllowed=false isAdmin=true isActive=true", () => {
 			const check = checkActive(false).bind(testController);
 			assert.deepEqual(check({status: TestController.statuses.active}, {user: admin}), {status: "active"});
-		});
-
-		it("checkActive noParams", () => {
-			const check = checkActive().bind(testController);
-			assert.throws(() => {
-				check();
-			}, e => e.message === "Cannot read property 'user' of undefined");
 		});
 	});
 });

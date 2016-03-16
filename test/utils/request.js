@@ -2,6 +2,7 @@
 
 import {getIP, getCurrency, setStatus, setRegExp} from "../../source/request";
 import assert from "power-assert";
+import langServer from "abl-lang/bundle/en/server";
 
 describe("#Request", () => {
 	describe("#getIP", () => {
@@ -33,21 +34,25 @@ describe("#Request", () => {
 			};
 			assert.equal(getCurrency(user), "uah");
 		});
-		it("getCurrency without user.payment CA", () => {
+		it("getCurrency without user.payment known location", () => {
 			const user = {
 				location: {countryCode: "CA"}
 			};
 			assert.equal(getCurrency(user), "cad");
 		});
-		it("getCurrency without user.payment UA", () => {
+		it("getCurrency without user.payment unknown", () => {
 			const user = {
 				location: {countryCode: "UA"}
 			};
-			assert.equal(getCurrency(user), "usd");
+			assert.throws(() => {
+				getCurrency(user);
+			}, e => e.message === langServer["unrecognized-currency"]);
 		});
-		it("getCurrency with no user.payment and user.location", () => {
+		it("getCurrency without user.payment and user.location", () => {
 			const user = {};
-			assert.equal(getCurrency(user), "usd");
+			assert.throws(() => {
+				getCurrency(user);
+			}, e => e.message === langServer["unrecognized-currency"]);
 		});
 	});
 

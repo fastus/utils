@@ -2,6 +2,8 @@
 
 import {sendError, addPaginationHeaders} from "../../source/response";
 import assert from "power-assert";
+import langMongo from "abl-lang/bundle/en/mongo";
+import langServer from "abl-lang/bundle/en/server";
 
 describe("#Response", () => {
 	describe("#sendError", () => {
@@ -47,7 +49,7 @@ describe("#Response", () => {
 				code: 11000
 			};
 			const error = createError(args);
-			sendError(error, request, getResponse(400, ["Email is a duplicate."]));
+			sendError(error, request, getResponse(400, [langMongo["duplicate-guide-email"]]));
 		});
 
 		it("sendError with MongoError E11000", () => {
@@ -57,7 +59,7 @@ describe("#Response", () => {
 				code: 11000
 			};
 			const error = createError(args);
-			sendError(error, request, getResponse(400, ["Duplicate key error"]));
+			sendError(error, request, getResponse(400, [langMongo.E11000]));
 		});
 
 		it("sendError with StripeCardError", () => {
@@ -74,13 +76,14 @@ describe("#Response", () => {
 		});
 
 		it("sendError with CustomError 511", () => {
+			const message = "test message body for CustomError";
 			const args = {
-				message: "test message body for CustomError",
+				message,
 				name: "CustomError",
 				status: 511
 			};
 			const error = createError(args);
-			sendError(error, request, getResponse(511, ["test message body for CustomError"]));
+			sendError(error, request, getResponse(511, [message]));
 		});
 
 		it("sendError with undefined error", () => {
@@ -91,7 +94,7 @@ describe("#Response", () => {
 		it("sendError with process.env.NODE_ENV = production", () => {
 			process.env.NODE_ENV = "production";
 			const error = new Error("test error with no status");
-			sendError(error, request, getResponse(500, ["An error has occurred.  Please contact Adventure Bucket List customer support if this error persists."]));
+			sendError(error, request, getResponse(500, [langServer.error]));
 		});
 		after(() => {
 			process.env.NODE_ENV = "test";
@@ -102,7 +105,7 @@ describe("#Response", () => {
 		function setRequest(arg) {
 			return Object.assign({
 				route: {
-					path: "pages"
+					path: "/pages"
 				},
 				query: {
 					pageSize: 5,

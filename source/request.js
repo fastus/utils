@@ -2,6 +2,7 @@
 
 import escapeStringRegexp from "escape-string-regexp";
 import {isType} from "./misc";
+import {makeError} from "./error";
 
 
 export function getIP(request) {
@@ -11,8 +12,10 @@ export function getIP(request) {
 export function getCurrency(user) {
 	if (user.payment) {
 		return user.payment.currency;
+	} else if (user.location && user.location && user.location.countryCode && ["ca", "us"].includes(user.location.countryCode.toLowerCase())) {
+		return `${user.location.countryCode.toLowerCase()}d`;
 	} else {
-		return user.location && user.location.countryCode.toLowerCase() === "ca" ? "cad" : "usd";
+		throw makeError("server.unrecognized-currency", user);
 	}
 }
 
