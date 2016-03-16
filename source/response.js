@@ -9,7 +9,6 @@ import configs from "./configs/config";
 
 const config = configs[process.env.NODE_ENV];
 
-const log = debug("utils:response");
 
 function _send(request, response) {
 	return (error) => {
@@ -25,7 +24,8 @@ export function processValidationError(error) {
 }
 
 export function sendError(error, request, response, next) {
-	log("sendError", error);
+	const log = debug("utils:response");
+	log(error);
 	void next; // eslint
 	const send = _send(request, response);
 	if (error.name === "ValidationError") {
@@ -39,12 +39,6 @@ export function sendError(error, request, response, next) {
 		return send({
 			status: 400,
 			message: translate(`mongo.${key}`, request.user) || translate("mongo.E11000", request.user)
-		});
-	}
-	if (error.type === "StripeCardError" || error.type === "StripeInvalidRequest") {
-		return send({
-			status: 400,
-			message: error.message
 		});
 	}
 	if (!error.status) {
@@ -98,10 +92,7 @@ export function wrapJSON(method) {
 				}
 				response.json(result);
 			})
-			.catch(error => {
-				log(error);
-				return sendError(error, request, response);
-			})
+			.catch(error => sendError(error, request, response))
 			.done();
 	};
 }
@@ -109,13 +100,7 @@ export function wrapJSON(method) {
 export function wrapFile(method) {
 	return (request, response, next) => {
 		method(request, response, next)
-			.then(result => {
-				log("result", result);
-			})
-			.catch(error => {
-				log(error);
-				return sendError(error, request, response);
-			})
+			.catch(error => sendError(error, request, response))
 			.done();
 	};
 }
@@ -125,7 +110,6 @@ export function wrapStripe(method) {
 		method(request, response, next)
 			.then(response.json.bind(response))
 			.catch(error => {
-				log(error);
 				switch (error.type) {
 					case "StripeCardError":
 					case "StripeInvalidRequestError":
@@ -135,10 +119,7 @@ export function wrapStripe(method) {
 					case "StripeConnectionError":
 					case "StripeAuthenticationError":
 					default:
-						if (process.env.NODE_ENV === "production") {
-							sendError(makeError("stripe-bad-request", request.user, 400), request, response);
-						}
-						return sendError(error, request, response);
+						return sendError(process.env.NODE_ENV === "production" ? makeError("api.stripe-bad-request", request.user, 400) : error, request, response);
 				}
 			})
 			.done();
