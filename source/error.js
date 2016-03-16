@@ -11,6 +11,5 @@ function _makeError(text, code = 500) {
 }
 
 export function makeError(key, user, code = 400) {
-	console.log(key, user, code);
 	return _makeError(translate(key, user), code);
 }
