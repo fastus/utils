@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "abl-constants": "git+ssh://github.com/bucket-list/constants.git#v0.1.12",
-    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#v0.3.0",
+    "abl-lang": "git+ssh://github.com/bucket-list/lang.git#v0.3.1",
     "debug": "2.2.0",
     "escape-string-regexp": "1.0.5",
     "lodash": "4.6.1",
