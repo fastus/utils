@@ -2,9 +2,11 @@
 .idea
 build
 coverage
+test.js
 
 # Mac
 .DS_Store
 
 # NODE
 node_modules
+npm-debug.log
