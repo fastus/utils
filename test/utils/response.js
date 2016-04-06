@@ -62,14 +62,6 @@ describe("#Response", () => {
 			sendError(error, request, getResponse(400, [langMongo.E11000]));
 		});
 
-		it("sendError with StripeCardError", () => {
-			const args = {
-				type: "StripeCardError"
-			};
-			const error = createError(args);
-			sendError(error, request, getResponse(400, [""]));
-		});
-
 		it("sendError with no error.status", () => {
 			const error = createError();
 			sendError(error, request, getResponse(500, [error.stack]));

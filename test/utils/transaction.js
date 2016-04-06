@@ -1,29 +1,22 @@
 "use strict";
 
 import assert from "power-assert";
-import {chargeNames} from "abl-constants/build/misc";
+import {chargeArray} from "abl-constants/build/objects";
 import {getAA} from "../../source/transaction";
 
 describe("#Transaction", () => {
 	describe("#printAA", () => {
-		const charges = [
-			{type: "aap", name: chargeNames.aap.adult},
-			{type: "aap", name: chargeNames.aap.youth},
-			{type: "aap", name: chargeNames.aap.youth},
-			{type: "aap", name: chargeNames.aap.child},
-			{type: "fake_type", name: "pen"}
-		];
+		const charges = Object.keys(chargeArray).map(key => chargeArray[key]);
 
-		it("printAA with wrong type", () => {
-			const type = "wrong_type";
+		it("should throw `wrong_type`", () => {
 			assert.throws(() => {
-				getAA(charges, type);
+				getAA(charges, "wrong_type");
 			}, e => e.message === "Wrong charge type");
 		});
 
-		it("printAA...", () => {
+		it("should get object", () => {
 			const type = "aap";
-			assert.deepEqual(getAA(charges, type), {Adult: 1, Youth: 2, Child: 1});
+			assert.deepEqual(getAA(charges, type), {adult: 1, youth: 1, child: 1});
 		});
 	});
 });
