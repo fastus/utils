@@ -1,6 +1,6 @@
 "use strict";
 
-export function printAA(charges, type) {
+export function getAA(charges, type) {
 	if (["aap", "addon"].indexOf(type) === -1) { // ChargeController.types
 		throw new Error("Wrong charge type");
 	}
@@ -12,5 +12,5 @@ export function printAA(charges, type) {
 			}
 			obj[charge.name]++;
 		});
-	return Object.keys(obj).map(key => `${key} x ${obj[key]}`);
+	return obj;
 }

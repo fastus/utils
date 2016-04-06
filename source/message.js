@@ -1,9 +1,9 @@
 "use strict";
 
-import {merge} from "lodash";
+import {map, merge} from "lodash";
 import {dateFormat, timeFormat} from "abl-constants/build/date";
 import {toDollars, formatUrl} from "./misc";
-import {printAA} from "./transaction";
+import {getAA} from "./transaction";
 import moment from "moment-config-trejgun";
 import {RRule} from "rrule";
 
@@ -83,8 +83,8 @@ function prepareTransaction(transaction) {
 
 	return {
 		booking: {
-			attendees: printAA(charges.aap, "aap").join("\n\n"),
-			addons: printAA(charges.addon, "addon").join("\n\n"),
+			attendees: map(getAA(charges.aap, "aap"), (value, key) => `${key} x ${value}`).join("\n\n"),
+			addons: map(getAA(charges.addon, "addon"), (value, key) => `${key} x ${value}`).join("\n\n"),
 			count: charges.aap.length
 		},
 		transaction: {

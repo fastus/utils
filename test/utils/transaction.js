@@ -2,7 +2,7 @@
 
 import assert from "power-assert";
 import {chargeNames} from "abl-constants/build/misc";
-import {printAA} from "../../source/transaction";
+import {getAA} from "../../source/transaction";
 
 describe("#Transaction", () => {
 	describe("#printAA", () => {
@@ -17,13 +17,13 @@ describe("#Transaction", () => {
 		it("printAA with wrong type", () => {
 			const type = "wrong_type";
 			assert.throws(() => {
-				printAA(charges, type);
+				getAA(charges, type);
 			}, e => e.message === "Wrong charge type");
 		});
 
 		it("printAA...", () => {
 			const type = "aap";
-			assert.deepEqual(printAA(charges, type), ["Adult x 1", "Youth x 2", "Child x 1"]);
+			assert.deepEqual(getAA(charges, type), {Adult: 1, Youth: 2, Child: 1});
 		});
 	});
 });
