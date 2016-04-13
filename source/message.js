@@ -34,6 +34,7 @@ function prepareEvent(event) {
 	return {
 		event: {
 			title: event.title,
+			description: event.description,
 			eventInstanceId: event.eventInstanceId,
 			startTime: startTime.format(timeFormat),
 			startDate: startTime.format(dateFormat),
