@@ -28,6 +28,10 @@ export function getRandomString(length = 64, type = 3) {
 	return result.join("");
 }
 
+export function getRandomElementFromArray(array = []) {
+	return array[Math.floor(Math.random() * array.length)];
+}
+
 export function tpl(template, data) {
 	return template.replace(/(\$\{([^\{\}]+)\})/g, ($0, $1, $2) => getObject($2, data));
 }
