@@ -18,6 +18,24 @@ export function processValidationError(error) {
 	return Object.keys(error.errors).map(key => error.errors[key].reason || error.errors[key].message);
 }
 
+export function processMongoError(error, user) {
+	const key = error.message.match(/\$(\S+)/)[1];
+	return translate(`mongo.${key}`, user) || translate("mongo.E11000", user);
+}
+
+export function processStripeError(error, user) {
+	switch (error.type) {
+		case "StripeCardError":
+		case "StripeInvalidRequestError":
+			return error.message;
+		case "StripeAPIError":
+		case "StripeConnectionError":
+		case "StripeAuthenticationError":
+		default:
+			return translate("api.stripe-bad-request", user);
+	}
+}
+
 export function sendError(error, request, response, next) {
 	const log = debug("utils:response");
 	log(error);
@@ -30,10 +48,15 @@ export function sendError(error, request, response, next) {
 		});
 	}
 	if (error.name === "MongoError" && error.code === 11000) {
-		const key = error.message.match(/\$(\S+)/)[1];
 		return send({
 			status: 400,
-			message: translate(`mongo.${key}`, request.user) || translate("mongo.E11000", request.user)
+			message: processMongoError(error, request.user)
+		});
+	}
+	if (error.type && error.type.startsWith("Stripe")) {
+		return send({
+			status: 400,
+			message: processStripeError(error, request.user)
 		});
 	}
 	if (!error.status) {
@@ -75,19 +98,7 @@ export function wrapStripe(method) {
 	return (request, response, next) => {
 		method(request, response, next)
 			.then(response.json.bind(response))
-			.catch(error => {
-				switch (error.type) {
-					case "StripeCardError":
-					case "StripeInvalidRequestError":
-						Object.assign(error, {status: 400});
-						return sendError(error, request, response);
-					case "StripeAPIError":
-					case "StripeConnectionError":
-					case "StripeAuthenticationError":
-					default:
-						return sendError(process.env.NODE_ENV === "production" ? makeError("api.stripe-bad-request", request.user, 400) : error, request, response);
-				}
-			})
+			.catch(error => sendError(error, request, response))
 			.done();
 	};
 }
