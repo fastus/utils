@@ -93,49 +93,4 @@ describe("#Response", () => {
 		});
 	});
 
-	describe("#addPaginationHeaders", () => {
-		function setRequest(arg) {
-			return Object.assign({
-				route: {
-					path: "/pages"
-				},
-				query: {
-					pageSize: 5,
-					page: 3
-				}
-			}, arg);
-		}
-
-		const response = {
-			headers: {},
-			set(header, url) {
-				this.headers[header] = url;
-			}
-		};
-
-		it("addPaginationHeaders page !== 0, page !== last", () => {
-			response.headers = {};
-			addPaginationHeaders(setRequest(), response, 30);
-			assert.equal(response.headers["X-First-Page-Url"], "https://localhost:443/pages?pageSize=5&page=0");
-			assert.equal(response.headers["X-Prev-Page-Url"], "https://localhost:443/pages?pageSize=5&page=2");
-			assert.equal(response.headers["X-Next-Page-Url"], "https://localhost:443/pages?pageSize=5&page=4");
-			assert.equal(response.headers["X-Last-Page-Url"], "https://localhost:443/pages?pageSize=5&page=6");
-		});
-		it("addPaginationHeaders page = 0, page !== last", () => {
-			response.headers = {};
-			addPaginationHeaders(setRequest({query: {pageSize: 5, page: 0}}), response, 30);
-			assert.equal(response.headers["X-First-Page-Url"], "https://localhost:443/pages?pageSize=5&page=0");
-			assert.equal(response.headers["X-Prev-Page-Url"], undefined);
-			assert.equal(response.headers["X-Next-Page-Url"], "https://localhost:443/pages?pageSize=5&page=1");
-			assert.equal(response.headers["X-Last-Page-Url"], "https://localhost:443/pages?pageSize=5&page=6");
-		});
-		it("addPaginationHeaders page !== 0, page = last", () => {
-			response.headers = {};
-			addPaginationHeaders(setRequest({query: {pageSize: 5, page: 6}}), response, 30);
-			assert.equal(response.headers["X-First-Page-Url"], "https://localhost:443/pages?pageSize=5&page=0");
-			assert.equal(response.headers["X-Prev-Page-Url"], "https://localhost:443/pages?pageSize=5&page=5");
-			assert.equal(response.headers["X-Next-Page-Url"], undefined);
-			assert.equal(response.headers["X-Last-Page-Url"], "https://localhost:443/pages?pageSize=5&page=6");
-		});
-	});
 });

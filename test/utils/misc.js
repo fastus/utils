@@ -24,26 +24,4 @@ describe("#Misc", () => {
 			});
 		});
 	});
-
-	describe("#getIP", () => {
-		it("getIP with CF-Connecting-IP HTTP header", () => {
-			const request = {
-				headers: {
-					"CF-Connecting-IP": "8.8.8.8"
-				},
-				get(status) {
-					return this.headers[status];
-				}
-			};
-			assert.equal(getIP(request), "8.8.8.8");
-		});
-		it("getIP without CF-Connecting-IP", () => {
-			const request = {
-				ip: "127.0.0.1",
-				get() {
-				}
-			};
-			assert.equal(getIP(request), "127.0.0.1");
-		});
-	});
 });
